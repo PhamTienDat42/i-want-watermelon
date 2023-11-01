@@ -2,17 +2,22 @@
 
 using System.Collections.Generic;
 using GamePlay;
+using System;
 
 namespace ObjectPools
 {
     public class FruitPools : MonoBehaviour
     {
+        [SerializeField] private List<Fruits> fruitPrefabs;
         [SerializeField] private Fruits fruits;
         [SerializeField] private int poolSize = 10;
         [SerializeField] private GameObject fruitsParents;
 
         private List<Fruits> fruitPools;
         private int lastDeactivatedFruitIndex = -1;
+
+        [SerializeField] private GameController controller;
+        [SerializeField] private GameView gameView;
 
         void Start()
         {
@@ -25,54 +30,39 @@ namespace ObjectPools
 
             for (int i = 0; i < poolSize; i++)
             {
-                Fruits obj = Instantiate(fruits);
+                Fruits obj = Instantiate(GetRandomFruitPrefab());
+                obj.InstantiateFruits(this, controller, gameView);
                 obj.transform.parent = fruitsParents.transform;
                 obj.gameObject.SetActive(false);
                 fruitPools.Add(obj);
             }
         }
 
-        public Fruits GetObjectFromPool(Vector3 position, Quaternion rotation)
-        {
-            foreach (Fruits obj in fruitPools)
-            {
-                if (!obj.gameObject.activeInHierarchy)
-                {
-                    obj.transform.position = position;
-                    obj.transform.rotation = rotation;
-                    obj.gameObject.SetActive(true);
-                    return obj;
-                }
-            }
-
-            // If all objects are currently in use, instantiate a new one
-            Fruits newObj = Instantiate(fruits, position, rotation);
-            fruitPools.Add(newObj);
-            return newObj;
-        }
-
-        public Fruits GetFruitFromPoolNew(Vector3 position, Quaternion rotation)
+        public Fruits GetFruitFromPoolNew(Vector3 position)
         {
             for (int i = 0; i < fruitPools.Count; i++)
             {
                 int indexToCheck = (lastDeactivatedFruitIndex + i + 1) % fruitPools.Count;
-                Debug.Log(indexToCheck);
                 Fruits fruit = fruitPools[indexToCheck];
 
                 if (!fruit.gameObject.activeInHierarchy)
                 {
                     fruit.transform.position = position;
-                    fruit.transform.rotation = rotation;
                     fruit.gameObject.SetActive(true);
                     lastDeactivatedFruitIndex = indexToCheck;
                     return fruit;
                 }
             }
 
-            Fruits newObj = Instantiate(fruits, position, rotation);
+            Fruits newObj = Instantiate(fruits);
             fruitPools.Add(newObj);
             lastDeactivatedFruitIndex = fruitPools.Count - 1;
             return newObj;
+        }
+
+        private Fruits GetRandomFruitPrefab()
+        {
+            return fruitPrefabs[UnityEngine.Random.Range(0, 6)];
         }
     }
 }
