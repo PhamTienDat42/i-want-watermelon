@@ -1,18 +1,29 @@
-using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
-public class GameView : MonoBehaviour
+namespace GamePlay
 {
-    // Start is called before the first frame update
-    void Start()
+    public class GameView : MonoBehaviour
     {
-        
-    }
+        [SerializeField] private GameController controller;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        [SerializeField] private TextMeshProUGUI scoreTMP;
+        [SerializeField] private TextMeshProUGUI highScoreTMP;
+        [SerializeField] private TextMeshProUGUI watermelonCountTMP;
+
+        private void Start()
+        {
+
+        }
+
+        public void SetScore()
+        {
+            scoreTMP.text = controller.Score.ToString();
+        }
+
+        public void SetWatermelonCount()
+        {
+            watermelonCountTMP.text = controller.WaterMelonCount.ToString();
+        }
     }
 }
