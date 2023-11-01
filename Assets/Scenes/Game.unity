@@ -224,7 +224,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c2806d3ba19b0f48befd202aa0401f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectPoolManager: {fileID: 618138677}
   parentFruits: {fileID: 1702540389}
   fruitSprites:
   - {fileID: 21300000, guid: 5e3ddcaea026a76468679fac3f89a736, type: 3}
@@ -335,7 +334,7 @@ GameObject:
   - component: {fileID: 533825443}
   m_Layer: 0
   m_Name: Ground
-  m_TagString: Background
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -416,7 +415,7 @@ EdgeCollider2D:
   m_GameObject: {fileID: 533825440}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 80371a4754001f744b3ae2ef7ac3a036, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -643,61 +642,6 @@ EdgeCollider2D:
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
   m_UseAdjacentEndPoint: 0
---- !u!1 &618138675
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 618138676}
-  - component: {fileID: 618138677}
-  m_Layer: 0
-  m_Name: '@Pool'
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &618138676
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 618138675}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 14
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &618138677
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 618138675}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10b2e9f7c9db3e849897a5183efb42f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fruitPrefabs:
-  - {fileID: -1767540580944800399, guid: 8404d909b3917b14c8fae3c032849898, type: 3}
-  - {fileID: -1609974920226878154, guid: 1a16d099b5401ad49a606e6023be21df, type: 3}
-  - {fileID: -547618904369671206, guid: fb3fec1f6c752c74c93968a0e19a95bc, type: 3}
-  - {fileID: 4191429220352759549, guid: 165a550611896524c953fda56605560e, type: 3}
-  - {fileID: -3155118937766954434, guid: 835f0a12d034df84082c67d55b877e60, type: 3}
-  - {fileID: 5715296322739191524, guid: 2adbe8eaf8632c343a06f106dbc00faf, type: 3}
-  - {fileID: -711378675641618261, guid: b3e9ad37e00391b49af4768004a8f39b, type: 3}
-  - {fileID: 477810423008923610, guid: a789d418ed96820439f8ff820ec4f8f6, type: 3}
-  - {fileID: 6454410988299850121, guid: c7008215d3380b1449736a8f5460218f, type: 3}
-  countToPool: 5
 --- !u!1 &782108865
 GameObject:
   m_ObjectHideFlags: 0
@@ -954,6 +898,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1122596358}
+  - component: {fileID: 1122596359}
   m_Layer: 0
   m_Name: '@View'
   m_TagString: Untagged
@@ -976,6 +921,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1122596359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1122596357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78009f5a6569c7f4c851b40ee472c839, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 95275831}
+  scoreTMP: {fileID: 1285147469}
+  highScoreTMP: {fileID: 1285147469}
+  watermelonCountTMP: {fileID: 0}
 --- !u!1 &1135988512
 GameObject:
   m_ObjectHideFlags: 0
@@ -1432,6 +1393,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1702540390}
     m_Modifications:
+    - target: {fileID: 1340467116229311730, guid: 8404d909b3917b14c8fae3c032849898, type: 3}
+      propertyPath: m_GravityScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6295707464873719113, guid: 8404d909b3917b14c8fae3c032849898, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -1514,7 +1479,7 @@ GameObject:
   - component: {fileID: 1600259509}
   m_Layer: 0
   m_Name: '@FruitsPool'
-  m_TagString: FruitPools
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1532,7 +1497,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1600259509
 MonoBehaviour:
@@ -1546,9 +1511,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0d405292e181964dbf4862ca1e7503c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fruitPrefabs:
+  - {fileID: -1767540580944800399, guid: 8404d909b3917b14c8fae3c032849898, type: 3}
+  - {fileID: -1609974920226878154, guid: 1a16d099b5401ad49a606e6023be21df, type: 3}
+  - {fileID: -547618904369671206, guid: fb3fec1f6c752c74c93968a0e19a95bc, type: 3}
+  - {fileID: 4191429220352759549, guid: 165a550611896524c953fda56605560e, type: 3}
+  - {fileID: -3155118937766954434, guid: 835f0a12d034df84082c67d55b877e60, type: 3}
+  - {fileID: 5715296322739191524, guid: 2adbe8eaf8632c343a06f106dbc00faf, type: 3}
+  - {fileID: -711378675641618261, guid: b3e9ad37e00391b49af4768004a8f39b, type: 3}
+  - {fileID: 477810423008923610, guid: a789d418ed96820439f8ff820ec4f8f6, type: 3}
+  - {fileID: 6454410988299850121, guid: c7008215d3380b1449736a8f5460218f, type: 3}
   fruits: {fileID: 1579095631}
-  poolSize: 30
+  poolSize: 50
   fruitsParents: {fileID: 1702540389}
+  controller: {fileID: 95275831}
+  gameView: {fileID: 1122596359}
 --- !u!1 &1702540389
 GameObject:
   m_ObjectHideFlags: 0

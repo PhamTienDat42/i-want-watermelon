@@ -1,4 +1,5 @@
 ﻿using ObjectPools;
+using System;
 using UnityEngine;
 
 namespace GamePlay
@@ -7,20 +8,28 @@ namespace GamePlay
     {
         [SerializeField] private int fruitPoint;
         private GameController controller;
-        private FruitPools fruitPools;
+        private GameView gameView;
         private SpriteRenderer spriteRenderer;
+        private new CircleCollider2D collider;
         private Rigidbody2D rb;
-        private const string BGTag = "Background";
+        private Vector2 velocity;
 
-        void Start()
+        private FruitPools fruitPools;
+
+        private const int MaxPoint = 10;
+
+        private void Start()
         {
-            var controllerObj = GameObject.FindGameObjectWithTag("GameController");
-            controller = controllerObj.GetComponent<GameController>();
-            var fruitPoolobj = GameObject.FindGameObjectWithTag("FruitPools");
-            fruitPools = fruitPoolobj.GetComponent<FruitPools>();
-
             spriteRenderer = GetComponent<SpriteRenderer>();
             rb = GetComponent<Rigidbody2D>();
+            collider = GetComponent<CircleCollider2D>();
+        }
+
+        public void InstantiateFruits(FruitPools fruitPools,GameController gameController, GameView gameView)
+        {
+            this.fruitPools = fruitPools;
+            this.controller = gameController;
+            this.gameView = gameView;
         }
 
         private void OnCollisionEnter2D(Collision2D collision)
@@ -41,31 +50,49 @@ namespace GamePlay
             return fruitPoint == otherFruit.fruitPoint;
         }
 
-        void SpawnNewFruit(int newPoints, Vector3 pos)
+        public void SpawnNewFruit(int newPoints, Vector3 pos, Vector2 velocity)
         {
-            Fruits newFruit = fruitPools.GetFruitFromPoolNew(pos, transform.rotation);
+            Fruits newFruit = fruitPools.GetFruitFromPoolNew(pos);
             newFruit.fruitPoint = newPoints;
-            newFruit.GetComponent<SpriteRenderer>().sprite = controller.FruitSprites[(newPoints-1)%9];
+            newFruit.GetComponent<SpriteRenderer>().sprite = controller.FruitSprites[(newPoints - 1) % 9];
+            float spriteRadius = newFruit.GetComponent<SpriteRenderer>().sprite.bounds.size.x / 2f;
+            newFruit.GetComponent<CircleCollider2D>().radius = spriteRadius;
+            newFruit.GetComponent<Rigidbody2D>().velocity = velocity;
+            Debug.Log(velocity);
+            if (Math.Abs(velocity.y) < 0.5f && Math.Abs(velocity.x) < 0.1f)
+            {
+                newFruit.GetComponent<Rigidbody2D>().AddForce(Vector2.up, ForceMode2D.Impulse);
+            }
             newFruit.gameObject.SetActive(true);
         }
 
         private void CombineObjects(Fruits otherFruit)
         {
             Fruits higherFruit = (transform.position.y > otherFruit.transform.position.y) ? this : otherFruit;
+            velocity = (transform.position.y > otherFruit.transform.position.y) ? this.rb.velocity : otherFruit.gameObject.GetComponent<Rigidbody2D>().velocity;
 
             if (!gameObject.activeSelf && !otherFruit.gameObject.activeSelf)
             {
                 return;
             }
-            var newPoitnts = fruitPoint + 1;
+            controller.Score += fruitPoint;
+            gameView.SetScore();
+
+            var newPoints = fruitPoint + 1;
+            if(newPoints == MaxPoint)
+            {
+                controller.WaterMelonCount++;
+                gameView.SetWatermelonCount();
+                return;
+            }
+
             gameObject.SetActive(false);
             otherFruit.gameObject.SetActive(false);
-            SpawnNewFruit(newPoitnts, higherFruit.transform.position);
-            if (rb != null)
-            {
-                Vector2 forceDirection = (transform.position - higherFruit.transform.position).normalized;
-                rb.AddForce(forceDirection*3f, ForceMode2D.Impulse);
-            }
+
+            SpawnNewFruit(newPoints, higherFruit.transform.position, velocity/2f);
+
+            transform.localPosition = otherFruit.gameObject.transform.localPosition = Vector3.zero;
+            transform.localRotation = otherFruit.gameObject.transform.localRotation = Quaternion.identity;
         }
     }
 }
