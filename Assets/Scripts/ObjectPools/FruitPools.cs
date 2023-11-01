@@ -19,7 +19,7 @@ namespace ObjectPools
         [SerializeField] private GameController controller;
         [SerializeField] private GameView gameView;
 
-        void Start()
+        private void Awake()
         {
             InitializePool();
         }

@@ -93,6 +93,7 @@ namespace GamePlay
 
             transform.localPosition = otherFruit.gameObject.transform.localPosition = Vector3.zero;
             transform.localRotation = otherFruit.gameObject.transform.localRotation = Quaternion.identity;
+            rb.gravityScale = otherFruit.GetComponent<Rigidbody2D>().gravityScale = 1f;
         }
     }
 }

@@ -11,7 +11,9 @@ namespace GamePlay
         [SerializeField] private List<Sprite> fruitSprites;
         [SerializeField] private FruitPools fruitPools;
         [SerializeField] private Camera mainCamera;
+        //[SerializeField] private SpriteRenderer nextFruitSprite;
 
+        private Fruits nextFruit;
         private bool isClickable = true;
         private int score = 0;
         public int WaterMelonCount { get; set; }
@@ -20,6 +22,8 @@ namespace GamePlay
         private void Start()
         {
             isClickable = true;
+            nextFruit = fruitPools.GetFruitFromPoolNew(new Vector3(0f, 4f,0f));
+            //nextFruitSprite.sprite = nextFruit.GetComponent<SpriteRenderer>().sprite;
         }
 
         private void Update()
@@ -33,7 +37,7 @@ namespace GamePlay
             if (Input.GetMouseButtonDown(0) && isClickable == true)
             {
                 var mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-                var pos = new Vector3(mousePos.x, 5f, 0f);
+                var pos = new Vector3(mousePos.x, 4f, 0f);
                 //fruitPools.GetFruitFromPoolNew(pos);
                 StartCoroutine(Drag(pos));
             }
@@ -49,7 +53,9 @@ namespace GamePlay
         private IEnumerator Drag(Vector3 pos)
         {
             isClickable = false;
-            fruitPools.GetFruitFromPoolNew(pos);
+            nextFruit.GetComponent<Rigidbody2D>().gravityScale = 1f;
+            nextFruit = fruitPools.GetFruitFromPoolNew(pos);
+            //nextFruitSprite.sprite = nextFruit.GetComponent<SpriteRenderer>().sprite;
             yield return new WaitForSeconds(1.5f);
             isClickable = true;
         }
