@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 3649421842287245879}
   - component: {fileID: 3649421842287245878}
   - component: {fileID: 3649421842287245877}
-  - component: {fileID: -3155118937766954434}
   - component: {fileID: 7620758876941706538}
+  - component: {fileID: -3155118937766954434}
   m_Layer: 0
   m_Name: 5
   m_TagString: Untagged
@@ -103,19 +103,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.775
---- !u!114 &-3155118937766954434
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3649421842287245876}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 085df45b0da195d44ae24269213dce90, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fruitPoint: 5
 --- !u!50 &7620758876941706538
 Rigidbody2D:
   serializedVersion: 4
@@ -135,5 +122,18 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
+--- !u!114 &-3155118937766954434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3649421842287245876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 085df45b0da195d44ae24269213dce90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fruitPoint: 5
