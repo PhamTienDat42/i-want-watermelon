@@ -8,7 +8,8 @@ namespace ObjectPools
     {
         private readonly Dictionary<string, Pools<Fruits>> objectPools = new();
 
-        [SerializeField] private List<Fruits> fruitPrefabs; // Nếu bạn có nhiều loại đối tượng, sử dụng mảng hoặc List để chứa các prefab
+        [SerializeField] private List<Fruits> fruitPrefabs;
+        [SerializeField] private int countToPool;
 
         void Start()
         {
@@ -19,7 +20,7 @@ namespace ObjectPools
         {
             foreach (Fruits fruitPrefab in fruitPrefabs)
             {
-                Pools<Fruits> objectPool = new Pools<Fruits>(fruitPrefab, 5, transform);
+                Pools<Fruits> objectPool = new Pools<Fruits>(fruitPrefab, countToPool, transform);
                 objectPools.Add(fruitPrefab.name, objectPool);
             }
         }
