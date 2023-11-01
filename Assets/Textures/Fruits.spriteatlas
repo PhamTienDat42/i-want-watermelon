@@ -37,8 +37,26 @@ SpriteAtlas:
     isAtlasV2: 0
     cachedData: {fileID: 0}
   m_MasterAtlas: {fileID: 0}
-  m_PackedSprites: []
-  m_PackedSpriteNamesToIndex: []
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 74f75770054bf7748a1d347b609fee32, type: 3}
+  - {fileID: 21300000, guid: d3a918065bf69e54ab8ae22762af5823, type: 3}
+  - {fileID: 21300000, guid: 60e3d26af9709644eac2f9d4f9dbfcbb, type: 3}
+  - {fileID: 21300000, guid: dfc0c18cd063dd5498329f72987607ed, type: 3}
+  - {fileID: 21300000, guid: d91dd28c54394254ab9eb8a58a6fa8df, type: 3}
+  - {fileID: 21300000, guid: 350a71dd5d443234e9cc80d362b2c058, type: 3}
+  - {fileID: 21300000, guid: 384871fd2c8676f439d80d4ba8bfeae6, type: 3}
+  - {fileID: 21300000, guid: 5e3ddcaea026a76468679fac3f89a736, type: 3}
+  - {fileID: 21300000, guid: 41d980bf919ba6542868b6b532576507, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - 5
+  - 7
+  - 9
+  - 2
+  - 4
+  - 8
+  - 6
+  - 1
+  - 3
   m_RenderDataMap: {}
   m_Tag: Fruits
   m_IsVariant: 0
