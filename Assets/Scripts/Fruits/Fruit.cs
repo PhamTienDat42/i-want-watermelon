@@ -76,7 +76,13 @@ namespace Fruits
             {
                 return;
             }
-            controller.Score += fruitPoint;
+            controller.Model.CurrentScore += fruitPoint;
+            var highScore = PlayerPrefs.GetInt(Constants.HighScore, 0);
+            if(controller.Model.CurrentScore > highScore)
+            {
+                highScore = controller.Model.CurrentScore;
+                controller.Model.SetHighScore(highScore);
+            }
             gameView.SetScore();
 
             var newPoints = fruitPoint + 1;
@@ -86,7 +92,9 @@ namespace Fruits
 
             if (newPoints == MaxPoint)
             {
-                controller.WaterMelonCount++;
+                //controller.Model.WatermelonCount++;
+                //PlayerPrefs.SetInt(Constants.WatermelonCount, controller.Model.WatermelonCount);
+                controller.Model.SetWatermelonCount();
                 gameView.SetWatermelonCount();
             }
             else
