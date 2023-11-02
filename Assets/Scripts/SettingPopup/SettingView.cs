@@ -4,6 +4,7 @@ using Utilities;
 
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System;
 
 namespace SettingPopup
 {
@@ -11,8 +12,10 @@ namespace SettingPopup
     {
         [SerializeField] private TextMeshProUGUI highScoreTMP;
         [SerializeField] private TextMeshProUGUI watermelonCountTMP;
+        [SerializeField] private TextMeshProUGUI confirmButtonTMP;
 
         private GameModel model;
+        private event Action OnConfirmButtonClicked;
 
         private void Awake()
         {
@@ -29,11 +32,33 @@ namespace SettingPopup
 
         private void Start()
         {
-            highScoreTMP.text = PlayerPrefs.GetInt(Constants.HighScore, 0).ToString();
-            watermelonCountTMP.text = PlayerPrefs.GetInt(Constants.WatermelonCount, 0).ToString();
+             highScoreTMP.text = PlayerPrefs.GetInt(Constants.HighScore, 0).ToString();
+             watermelonCountTMP.text = PlayerPrefs.GetInt(Constants.WatermelonCount, 0).ToString();
+
+            if(model.PopupTypeParam == PopupType.SettingPopup)
+            {
+                OnConfirmButtonClicked = OnContinueButtonClick;
+                confirmButtonTMP.text = "Continue";
+            }
+            else
+            {
+                OnConfirmButtonClicked = OnPlayAgainButtonClick;
+                confirmButtonTMP.text = "Play Again";
+            }
         }
 
-        public void OnContinueButtonClick()
+
+        public void OnConfirmButtonClick()
+        {
+            OnConfirmButtonClicked?.Invoke();
+        }
+
+        private void OnPlayAgainButtonClick()
+        {
+            SceneManager.LoadScene(Constants.GameScene);
+        }
+
+        private void OnContinueButtonClick()
         {
             Time.timeScale = 1.0f;
             PopupHelpers.Close();
