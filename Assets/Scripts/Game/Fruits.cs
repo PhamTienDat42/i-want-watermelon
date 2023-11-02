@@ -58,7 +58,7 @@ namespace GamePlay
             float spriteRadius = newFruit.GetComponent<SpriteRenderer>().sprite.bounds.size.x / 2f;
             newFruit.GetComponent<CircleCollider2D>().radius = spriteRadius;
             newFruit.GetComponent<Rigidbody2D>().velocity = velocity;
-            Debug.Log(velocity);
+            newFruit.GetComponent<Rigidbody2D>().gravityScale = 1.0f;
             if (Math.Abs(velocity.y) < 0.5f && Math.Abs(velocity.x) < 0.1f)
             {
                 newFruit.GetComponent<Rigidbody2D>().AddForce(Vector2.up, ForceMode2D.Impulse);
@@ -79,21 +79,23 @@ namespace GamePlay
             gameView.SetScore();
 
             var newPoints = fruitPoint + 1;
-            if(newPoints == MaxPoint)
-            {
-                controller.WaterMelonCount++;
-                gameView.SetWatermelonCount();
-                return;
-            }
 
             gameObject.SetActive(false);
             otherFruit.gameObject.SetActive(false);
 
-            SpawnNewFruit(newPoints, higherFruit.transform.position, velocity/2f);
+            if (newPoints == MaxPoint)
+            {
+                controller.WaterMelonCount++;
+                gameView.SetWatermelonCount();
+            }
+            else
+            {
+                SpawnNewFruit(newPoints, higherFruit.transform.position, velocity / 2f);
+            }
 
             transform.localPosition = otherFruit.gameObject.transform.localPosition = Vector3.zero;
             transform.localRotation = otherFruit.gameObject.transform.localRotation = Quaternion.identity;
-            rb.gravityScale = otherFruit.GetComponent<Rigidbody2D>().gravityScale = 1f;
+            rb.gravityScale = otherFruit.GetComponent<Rigidbody2D>().gravityScale = 0.0f;
         }
     }
 }
