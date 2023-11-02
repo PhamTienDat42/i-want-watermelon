@@ -2,7 +2,6 @@
 
 using System.Collections.Generic;
 using GamePlay;
-using System;
 
 namespace ObjectPools
 {
@@ -62,7 +61,7 @@ namespace ObjectPools
 
         private Fruits GetRandomFruitPrefab()
         {
-            return fruitPrefabs[UnityEngine.Random.Range(0, 6)];
+            return fruitPrefabs[UnityEngine.Random.Range(0, 5)];
         }
     }
 }

@@ -18,11 +18,12 @@ namespace GamePlay
         private int score = 0;
         public int WaterMelonCount { get; set; }
 
+        private readonly Vector3 startPos = new Vector3(0f, 4f,0f);
 
         private void Start()
         {
             isClickable = true;
-            nextFruit = fruitPools.GetFruitFromPoolNew(new Vector3(0f, 4f,0f));
+            nextFruit = fruitPools.GetFruitFromPoolNew(startPos);
             //nextFruitSprite.sprite = nextFruit.GetComponent<SpriteRenderer>().sprite;
         }
 
@@ -53,10 +54,11 @@ namespace GamePlay
         private IEnumerator Drag(Vector3 pos)
         {
             isClickable = false;
+            nextFruit.transform.localPosition = pos;
             nextFruit.GetComponent<Rigidbody2D>().gravityScale = 1f;
-            nextFruit = fruitPools.GetFruitFromPoolNew(pos);
             //nextFruitSprite.sprite = nextFruit.GetComponent<SpriteRenderer>().sprite;
             yield return new WaitForSeconds(1.5f);
+            nextFruit = fruitPools.GetFruitFromPoolNew(startPos);
             isClickable = true;
         }
 
