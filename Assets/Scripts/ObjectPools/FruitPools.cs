@@ -60,21 +60,6 @@ namespace ObjectPools
             return newObj;
         }
 
-        //public void ReturnActiveFruitsAndScore()
-        //{
-        //    foreach (Fruit fruit in fruitPools)
-        //    {
-        //        if (fruit.gameObject.activeSelf)
-        //        {
-        //            controller.Score += fruit.FruitPoint;
-
-        //            ReturnFruitToPool(fruit);
-        //        }
-        //    }
-
-        //    gameView.SetScore();
-        //}
-
         public IEnumerator ReturnActiveFruitsAndScoreWithDelay(float delay)
         {
             foreach (Fruit fruit in fruitPools)
@@ -94,6 +79,12 @@ namespace ObjectPools
                     yield return new WaitForSeconds(delay);
                     ReturnFruitToPool(fruit);
                 }
+            }
+            var highScore = PlayerPrefs.GetInt(Constants.HighScore, 0);
+            if (controller.Model.CurrentScore > highScore)
+            {
+                highScore = controller.Model.CurrentScore;
+                controller.Model.SetHighScore(highScore);
             }
         }
 
