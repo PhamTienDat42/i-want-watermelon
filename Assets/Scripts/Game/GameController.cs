@@ -102,7 +102,9 @@ namespace GamePlay
         private IEnumerator Drag(Vector3 pos)
         {
             isClickable = false;
+            nextFruit.gameObject.SetActive(false);
             nextFruit.transform.localPosition = pos;
+            nextFruit.gameObject.SetActive(true);
             nextFruit.GetComponent<Rigidbody2D>().gravityScale = 1f;
             yield return new WaitForSeconds(1.5f);
             nextFruit = fruitPools.GetFruitFromPoolNew(startPos);
