@@ -7,7 +7,6 @@ namespace GamePlay
     public class GameView : MonoBehaviour
     {
         [SerializeField] private GameController controller;
-        [SerializeField] private GameModel model;
 
         [Space(8.0f)]
         [Header("TMP")]
@@ -16,7 +15,6 @@ namespace GamePlay
         [SerializeField] private TextMeshProUGUI watermelonCountTMP;
         [SerializeField] private TextMeshProUGUI timerTMP;
         [SerializeField] private TextMeshProUGUI countDownTimerTMP;
-
 
         private void Start()
         {
