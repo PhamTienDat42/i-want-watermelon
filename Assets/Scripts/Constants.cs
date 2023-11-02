@@ -8,4 +8,11 @@ public class Constants
     public const string SoundKey = "sou";
     public const string EffectKey = "eff";
     public const string HapticKey = "hapt";
+
+    //Score
+    public const string HighScore = "hscr";
+    public const string WatermelonCount = "wtc";
+
+    //Tags
+    public const string DataTag = "Datas";
 }
