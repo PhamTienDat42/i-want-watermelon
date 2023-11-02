@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using ObjectPools;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 namespace GamePlay
 {
@@ -26,13 +27,24 @@ namespace GamePlay
 
         private Fruits.Fruit nextFruit;
         private bool isClickable;
-        private int score = 0;
+        //private int score = 0;
         private float startTime;
         private Vector3 startPos;
+        private GameModel model;
 
         private void Awake()
         {
             Application.targetFrameRate = 60;
+
+            var modelObj = GameObject.FindGameObjectWithTag(Constants.DataTag);
+            if (modelObj != null)
+            {
+                model = modelObj.GetComponent<GameModel>();
+            }
+            else
+            {
+                SceneManager.LoadScene(Constants.MenuScene);
+            }
         }
 
         private void Start()
@@ -119,9 +131,10 @@ namespace GamePlay
         }
 
         public List<Sprite> FruitSprites => fruitSprites;
-        public int Score { get => score; set => score = value; }
-        public int WaterMelonCount { get; set; }
+        //public int Score { get => score; set => score = value; }
+        //public int WaterMelonCount { get; set; }
         public bool IsClickable { get => isClickable; set => isClickable = value; }
         public Fruits.Fruit NextFruit => nextFruit;
+        public GameModel Model => model;
     }
 }
