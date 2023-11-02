@@ -7,22 +7,27 @@ namespace GamePlay
 {
     public class GameController : MonoBehaviour
     {
+        [Header("Game")]
         [SerializeField] private GameView gameView;
-        [SerializeField] private GameObject parentFruits;
-        [SerializeField] private List<Sprite> fruitSprites;
         [SerializeField] private FruitPools fruitPools;
         [SerializeField] private Camera mainCamera;
+
+        [Header("Data")]
+        [SerializeField] private List<Sprite> fruitSprites;
+        [SerializeField] private GameObject parentFruits;
         [SerializeField] private GameObject boxBoundParent;
 
+        [Space(8.0f)]
+        [Header("Bound-Collider2D")]
+        [SerializeField] private BoxCollider2D topCollider;
+        [SerializeField] private BoxCollider2D leftCollider;
+        [SerializeField] private BoxCollider2D rightCollider;
+
         private Fruits.Fruit nextFruit;
-        private bool isClickable = true;
+        private bool isClickable;
         private int score = 0;
-        public int WaterMelonCount { get; set; }
-
         private float startTime;
-
-
-        private readonly Vector3 startPos = new(0f, 4f,0f);
+        private Vector3 startPos;
 
         private void Awake()
         {
@@ -33,8 +38,10 @@ namespace GamePlay
         {
             isClickable = true;
             startTime = Time.time;
+            var startY = mainCamera.orthographicSize - fruitSprites[^1].bounds.size.x / 2f;
+            startPos = new Vector3(0f, startY, 0f);
             nextFruit = fruitPools.GetFruitFromPoolNew(startPos);
-            CreateScreenBoundsColliders(mainCamera, boxBoundParent);
+            SetBoxBound(mainCamera, boxBoundParent);
         }
 
         private void Update()
@@ -82,27 +89,20 @@ namespace GamePlay
             isClickable = true;
         }
 
-        public int RandomFruits()
-        {
-            return Random.Range(1, 10);
-        }
-
-        private void CreateScreenBoundsColliders(Camera mainCamera, GameObject parent)
+        private void SetBoxBound(Camera mainCamera, GameObject parent)
         {
             float screenHeight = mainCamera.orthographicSize * 2f;
             float screenWidth = screenHeight * mainCamera.aspect;
-            CreateSingleBoundCollider("Top", new Vector2(screenWidth, 0.01f), new Vector3(0f, screenHeight / 2f, 0f), parent);
-            CreateSingleBoundCollider("Left", new Vector2(0.01f, screenHeight), new Vector3(-screenWidth / 2f, 0f, 0f), parent);
-            CreateSingleBoundCollider("Right", new Vector2(0.01f, screenHeight), new Vector3(screenWidth / 2f, 0f, 0f), parent);
+
+            SetBoundPosition(topCollider, new Vector2(screenWidth, 0.01f), new Vector3(0f, screenHeight / 2f - fruitSprites[^1].bounds.size.x, 0f));
+            SetBoundPosition(leftCollider, new Vector2(0.01f, screenHeight), new Vector3(-screenWidth / 2f, 0f, 0f));
+            SetBoundPosition(rightCollider, new Vector2(0.01f, screenHeight), new Vector3(screenWidth / 2f, 0f, 0f));
         }
 
-        private void CreateSingleBoundCollider(string objName, Vector2 size, Vector3 localPos, GameObject parent)
+        private void SetBoundPosition(BoxCollider2D collider2D , Vector2 size, Vector3 localPos)
         {
-            GameObject newBound = new(objName);
-            var collider = newBound.AddComponent<BoxCollider2D>();
-            collider.size = size;
-            newBound.transform.localPosition = localPos;
-            newBound.transform.parent = parent.transform;
+            collider2D.size = size;
+            collider2D.transform.localPosition = localPos;
         }
 
         //Timer
@@ -117,5 +117,8 @@ namespace GamePlay
 
         public List<Sprite> FruitSprites => fruitSprites;
         public int Score { get => score; set => score = value; }
+        public int WaterMelonCount { get; set; }
+        public bool IsClickable { get => isClickable; set => isClickable = value; }
+        public Fruits.Fruit NextFruit => nextFruit;
     }
 }

@@ -98,5 +98,8 @@ namespace Fruits
             transform.localRotation = otherFruit.gameObject.transform.localRotation = Quaternion.identity;
             rb.gravityScale = otherFruit.GetComponent<Rigidbody2D>().gravityScale = 0.0f;
         }
+
+        public int FruitPoint { get => fruitPoint; set => fruitPoint = value; }
+        public Rigidbody2D Rb => rb;
     }
 }
