@@ -36,5 +36,13 @@ namespace GamePlay
         public int HighScore { get; set; }
 
         public int WatermelonCount { get; set; }
+
+        public PopupType PopupTypeParam { get; set; }
+    }
+
+    public enum PopupType
+    {
+        SettingPopup,
+        GameOverPopup
     }
 }
