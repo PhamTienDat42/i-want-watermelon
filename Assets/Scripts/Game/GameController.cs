@@ -1,6 +1,8 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
+
 using ObjectPools;
+
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -17,7 +19,6 @@ namespace GamePlay
         [Header("Data")]
         [SerializeField] private List<Sprite> fruitSprites;
         [SerializeField] private GameObject parentFruits;
-        [SerializeField] private GameObject boxBoundParent;
 
         [Space(8.0f)]
         [Header("Bound-Collider2D")]
@@ -27,10 +28,13 @@ namespace GamePlay
 
         private Fruits.Fruit nextFruit;
         private bool isClickable;
-        //private int score = 0;
         private float startTime;
         private Vector3 startPos;
         private GameModel model;
+
+        //countdownshake
+        private float countdownTime = 10f;
+        private bool boolShake = false;
 
         private void Awake()
         {
@@ -54,7 +58,7 @@ namespace GamePlay
             var startY = mainCamera.orthographicSize - fruitSprites[^1].bounds.size.x / 2f;
             startPos = new Vector3(0f, startY, 0f);
             nextFruit = fruitPools.GetFruitFromPoolNew(startPos);
-            SetBoxBound(mainCamera, boxBoundParent);
+            SetBoxBound(mainCamera);
         }
 
         private void Update()
@@ -62,6 +66,7 @@ namespace GamePlay
             //Timer
             float elapsedTime = Time.time - startTime;
             UpdateTimerText(elapsedTime);
+            CountDownToShake(countdownTime);
 
             //Game
             DragFruits();
@@ -104,7 +109,7 @@ namespace GamePlay
             isClickable = true;
         }
 
-        private void SetBoxBound(Camera mainCamera, GameObject parent)
+        private void SetBoxBound(Camera mainCamera)
         {
             float screenHeight = mainCamera.orthographicSize * 2f;
             float screenWidth = screenHeight * mainCamera.aspect;
@@ -130,11 +135,31 @@ namespace GamePlay
             gameView.SetTimer(hours, minutes, seconds);
         }
 
+        private void CountDownToShake(float elapsedTime)
+        {
+            if (countdownTime > 0)
+            {
+                countdownTime -= Time.deltaTime;
+                int minutes = Mathf.FloorToInt((elapsedTime % 3600f) / 60f);
+                int seconds = Mathf.FloorToInt(elapsedTime % 60f);
+                gameView.SetCountDownTimer(minutes, seconds);
+
+                if (countdownTime <= 0 && !boolShake)
+                {
+                    boolShake = true;
+                }
+            }
+        }
+
+        public void ResetCountDownTime(float time)
+        {
+            countdownTime = time;
+        }
+
         public List<Sprite> FruitSprites => fruitSprites;
-        //public int Score { get => score; set => score = value; }
-        //public int WaterMelonCount { get; set; }
         public bool IsClickable { get => isClickable; set => isClickable = value; }
         public Fruits.Fruit NextFruit => nextFruit;
         public GameModel Model => model;
+        public bool BoolShake { get => boolShake; set => boolShake = value; }
     }
 }
