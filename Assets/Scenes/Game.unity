@@ -1449,7 +1449,7 @@ MonoBehaviour:
   - {fileID: -711378675641618261, guid: b3e9ad37e00391b49af4768004a8f39b, type: 3}
   - {fileID: 477810423008923610, guid: a789d418ed96820439f8ff820ec4f8f6, type: 3}
   - {fileID: 6454410988299850121, guid: c7008215d3380b1449736a8f5460218f, type: 3}
-  poolSize: 3
+  poolSize: 100
   fruitsParents: {fileID: 1702540389}
   controller: {fileID: 95275831}
   gameView: {fileID: 1122596359}
