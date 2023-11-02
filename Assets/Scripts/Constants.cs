@@ -15,4 +15,8 @@ public class Constants
 
     //Tags
     public const string DataTag = "Datas";
+    public const string FruitTag = "Fruit";
+
+    //Game
+    public const int MaxPoint = 10;
 }
