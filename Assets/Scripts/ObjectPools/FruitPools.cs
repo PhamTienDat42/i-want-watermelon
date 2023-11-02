@@ -3,6 +3,7 @@
 using System.Collections.Generic;
 using GamePlay;
 using Fruits;
+using System.Collections;
 
 namespace ObjectPools
 {
@@ -57,6 +58,48 @@ namespace ObjectPools
             fruitPools.Add(newObj);
             lastDeactivatedFruitIndex = fruitPools.Count - 1;
             return newObj;
+        }
+
+        //public void ReturnActiveFruitsAndScore()
+        //{
+        //    foreach (Fruit fruit in fruitPools)
+        //    {
+        //        if (fruit.gameObject.activeSelf)
+        //        {
+        //            controller.Score += fruit.FruitPoint;
+
+        //            ReturnFruitToPool(fruit);
+        //        }
+        //    }
+
+        //    gameView.SetScore();
+        //}
+
+        public IEnumerator ReturnActiveFruitsAndScoreWithDelay(float delay)
+        {
+            foreach (Fruit fruit in fruitPools)
+            {
+                if (fruit.gameObject.activeSelf)
+                {
+                    fruit.Rb.bodyType = RigidbodyType2D.Static;
+                }
+            }
+
+            foreach (Fruit fruit in fruitPools)
+            {
+                if (fruit.gameObject.activeSelf)
+                {
+                    controller.Score += fruit.FruitPoint;
+                    gameView.SetScore();
+                    yield return new WaitForSeconds(delay);
+                    ReturnFruitToPool(fruit);
+                }
+            }
+        }
+
+        public void ReturnFruitToPool(Fruit fruit)
+        {
+            fruit.gameObject.SetActive(false);
         }
 
         private Fruit GetRandomFruitPrefab()
