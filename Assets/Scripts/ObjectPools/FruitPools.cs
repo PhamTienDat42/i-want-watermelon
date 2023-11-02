@@ -89,7 +89,7 @@ namespace ObjectPools
             {
                 if (fruit.gameObject.activeSelf)
                 {
-                    controller.Score += fruit.FruitPoint;
+                    controller.Model.CurrentScore += fruit.FruitPoint;
                     gameView.SetScore();
                     yield return new WaitForSeconds(delay);
                     ReturnFruitToPool(fruit);

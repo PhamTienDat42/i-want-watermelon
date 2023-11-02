@@ -7,6 +7,7 @@ namespace GamePlay
     public class GameView : MonoBehaviour
     {
         [SerializeField] private GameController controller;
+        [SerializeField] private GameModel model;
 
         [Space(8.0f)]
         [Header("TMP")]
@@ -22,12 +23,12 @@ namespace GamePlay
 
         public void SetScore()
         {
-            scoreTMP.text = controller.Score.ToString();
+            scoreTMP.text = controller.Model.CurrentScore.ToString();
         }
 
         public void SetWatermelonCount()
         {
-            watermelonCountTMP.text = controller.WaterMelonCount.ToString();
+            watermelonCountTMP.text = controller.Model.WatermelonCount.ToString();
         }
 
         public void SetTimer(int h, int m, int s)
