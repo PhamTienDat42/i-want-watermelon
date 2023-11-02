@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using ObjectPools;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace GamePlay
 {
@@ -57,7 +58,7 @@ namespace GamePlay
         private void DragFruits()
         {
 #if UNITY_EDITOR
-            if (Input.GetMouseButtonDown(0) && isClickable == true)
+            if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject() && isClickable == true)
             {
                 var mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
                 var pos = new Vector3(mousePos.x, 4f, 0f);
@@ -67,13 +68,15 @@ namespace GamePlay
             if (Input.touchCount > 0 && isClickable == true)
             {
                 Touch touch = Input.GetTouch(0);
-
-                if (touch.phase == TouchPhase.Began)
+                if (!EventSystem.current.IsPointerOverGameObject(touch.fingerId))
                 {
-                    Vector3 touchPos = Camera.main.ScreenToWorldPoint(touch.position);
+                    if (touch.phase == TouchPhase.Began)
+                    {
+                        Vector3 touchPos = Camera.main.ScreenToWorldPoint(touch.position);
 
-                    var pos = new Vector3(touchPos.x, 4f, 0f);
-                    StartCoroutine(Drag(pos));
+                        var pos = new Vector3(touchPos.x, 4f, 0f);
+                        StartCoroutine(Drag(pos));
+                    }
                 }
             }
 #endif
