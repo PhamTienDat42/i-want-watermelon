@@ -42,6 +42,7 @@ namespace GamePlay
                     StartCoroutine(fruitPools.ReturnActiveFruitsAndScoreWithDelay(0.25f));
                     yield return new WaitForSeconds(1.0f);
                     controller.IsClickable = false;
+                    controller.Model.PopupTypeParam = PopupType.GameOverPopup;
                     PopupHelpers.Show(Constants.SettingPopup);
                     yield break;
                 }

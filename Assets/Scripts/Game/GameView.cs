@@ -45,6 +45,7 @@ namespace GamePlay
 
         public void OnSettingButtonClick()
         {
+            controller.Model.PopupTypeParam = PopupType.SettingPopup;
             PopupHelpers.Show(Constants.SettingPopup);
             Time.timeScale = 0f;
         }
