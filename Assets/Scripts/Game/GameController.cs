@@ -26,11 +26,13 @@ namespace GamePlay
         [SerializeField] private BoxCollider2D leftCollider;
         [SerializeField] private BoxCollider2D rightCollider;
 
-        private Fruits.Fruit nextFruit;
+        private GameModel model;
         private bool isClickable;
+
+        //fruit
+        private Fruits.Fruit nextFruit;
         private float startTime;
         private Vector3 startPos;
-        private GameModel model;
 
         //countdownshake
         private float countdownTime = 10f;
@@ -55,6 +57,7 @@ namespace GamePlay
         {
             isClickable = true;
             startTime = Time.time;
+
             var startY = mainCamera.orthographicSize - fruitSprites[^1].bounds.size.x / 2f;
             startPos = new Vector3(0f, startY, 0f);
             nextFruit = fruitPools.GetFruitFromPoolNew(startPos);
@@ -77,9 +80,21 @@ namespace GamePlay
 #if UNITY_EDITOR
             if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject() && isClickable == true)
             {
+                var halfScreenWidth = mainCamera.orthographicSize * mainCamera.aspect;
+                var maxStartX = halfScreenWidth - nextFruit.GetComponent<CircleCollider2D>().bounds.size.x / 2f;
+                var minStartX = -halfScreenWidth + nextFruit.GetComponent<CircleCollider2D>().bounds.size.x / 2f;
                 var mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
                 var startY = mainCamera.orthographicSize - fruitSprites[^1].bounds.size.x / 2f;
-                var pos = new Vector3(mousePos.x, startY, 0f);
+                var posX = mousePos.x;
+                if (mousePos.x > maxStartX)
+                {
+                    posX = maxStartX;
+                }
+                else if (mousePos.x < minStartX)
+                {
+                    posX = minStartX;
+                }
+                var pos = new Vector3(posX, startY, 0f);
                 StartCoroutine(Drag(pos));
             }
 #elif UNITY_ANDROID
@@ -90,8 +105,20 @@ namespace GamePlay
                 {
                     if (touch.phase == TouchPhase.Began)
                     {
+                        var halfScreenWidth = mainCamera.orthographicSize * mainCamera.aspect;
+                        var maxStartX = halfScreenWidth - nextFruit.GetComponent<CircleCollider2D>().bounds.size.x / 2f;
+                        var minStartX = -halfScreenWidth + nextFruit.GetComponent<CircleCollider2D>().bounds.size.x / 2f;
                         Vector3 touchPos = Camera.main.ScreenToWorldPoint(touch.position);
                         var startY = mainCamera.orthographicSize - fruitSprites[^1].bounds.size.x / 2f;
+                        var posX = touchPos.x;
+                        if (touchPos.x > maxStartX)
+                        {
+                            posX = maxStartX;
+                        }
+                        else if (touchPos.x < minStartX)
+                        {
+                            posX = minStartX;
+                        }
                         var pos = new Vector3(touchPos.x, startY, 0f);
                         StartCoroutine(Drag(pos));
                     }
@@ -122,7 +149,7 @@ namespace GamePlay
             SetBoundPosition(rightCollider, new Vector2(0.01f, screenHeight), new Vector3(screenWidth / 2f, 0f, 0f));
         }
 
-        private void SetBoundPosition(BoxCollider2D collider2D , Vector2 size, Vector3 localPos)
+        private void SetBoundPosition(BoxCollider2D collider2D, Vector2 size, Vector3 localPos)
         {
             collider2D.size = size;
             collider2D.transform.localPosition = localPos;
