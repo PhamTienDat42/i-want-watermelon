@@ -20,6 +20,11 @@ namespace GamePlay
 
         private readonly Vector3 startPos = new Vector3(0f, 4f,0f);
 
+        private void Awake()
+        {
+            Application.targetFrameRate = 60;
+        }
+
         private void Start()
         {
             isClickable = true;
@@ -43,10 +48,17 @@ namespace GamePlay
                 StartCoroutine(Drag(pos));
             }
 #elif UNITY_ANDROID
-            if(Input.touchCount > 0 && isClickable == true)
+            if (Input.touchCount > 0 && isClickable == true)
             {
                 Touch touch = Input.GetTouch(0);
 
+                if (touch.phase == TouchPhase.Began)
+                {
+                    Vector3 touchPos = Camera.main.ScreenToWorldPoint(touch.position);
+
+                    var pos = new Vector3(touchPos.x, 4f, 0f);
+                    StartCoroutine(Drag(pos));
+                }
             }
 #endif
         }
