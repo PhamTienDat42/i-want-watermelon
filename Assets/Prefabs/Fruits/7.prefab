@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -711378675641618261}
   m_Layer: 0
   m_Name: 7
-  m_TagString: Untagged
+  m_TagString: Fruit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -102,7 +102,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.70703125
+  m_Radius: 0.54518074
 --- !u!50 &5279239797727953958
 Rigidbody2D:
   serializedVersion: 4
