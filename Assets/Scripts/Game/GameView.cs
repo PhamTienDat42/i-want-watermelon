@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using Utilities;
 
 namespace GamePlay
 {
@@ -7,6 +8,8 @@ namespace GamePlay
     {
         [SerializeField] private GameController controller;
 
+        [Space(8.0f)]
+        [Header("TMP")]
         [SerializeField] private TextMeshProUGUI scoreTMP;
         [SerializeField] private TextMeshProUGUI highScoreTMP;
         [SerializeField] private TextMeshProUGUI watermelonCountTMP;
@@ -14,7 +17,7 @@ namespace GamePlay
 
         private void Start()
         {
-
+            Time.timeScale = 1.0f;
         }
 
         public void SetScore()
@@ -30,6 +33,12 @@ namespace GamePlay
         public void SetTimer(int h, int m, int s)
         {
             timerTMP.text = string.Format("{0:D2}:{1:D2}:{2:D2}", h, m, s);
+        }
+
+        public void OnSettingButtonClick()
+        {
+            PopupHelpers.Show(Constants.SettingPopup);
+            Time.timeScale = 0f;
         }
     }
 }
