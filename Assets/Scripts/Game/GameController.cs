@@ -78,7 +78,8 @@ namespace GamePlay
             if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject() && isClickable == true)
             {
                 var mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-                var pos = new Vector3(mousePos.x, 4f, 0f);
+                var startY = mainCamera.orthographicSize - fruitSprites[^1].bounds.size.x / 2f;
+                var pos = new Vector3(mousePos.x, startY, 0f);
                 StartCoroutine(Drag(pos));
             }
 #elif UNITY_ANDROID
@@ -90,8 +91,8 @@ namespace GamePlay
                     if (touch.phase == TouchPhase.Began)
                     {
                         Vector3 touchPos = Camera.main.ScreenToWorldPoint(touch.position);
-
-                        var pos = new Vector3(touchPos.x, 4f, 0f);
+                        var startY = mainCamera.orthographicSize - fruitSprites[^1].bounds.size.x / 2f;
+                        var pos = new Vector3(touchPos.x, startY, 0f);
                         StartCoroutine(Drag(pos));
                     }
                 }

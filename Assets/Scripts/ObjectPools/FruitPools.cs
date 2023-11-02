@@ -15,7 +15,7 @@ namespace ObjectPools
         [SerializeField] private GameController controller;
         [SerializeField] private GameView gameView;
 
-        private List<Fruit> fruitPools;
+        private List<Fruit> fruitPools = new();
         private int lastDeactivatedFruitIndex = -1;
         private readonly float shakeForce = 5f;
         private readonly float shakeThreshold = 3f;
@@ -25,9 +25,9 @@ namespace ObjectPools
             InitializePool();
         }
 
-        void InitializePool()
+        private void InitializePool()
         {
-            fruitPools = new List<Fruit>();
+            //fruitPools = new List<Fruit>();
 
             for (int i = 0; i < poolSize; i++)
             {
@@ -74,10 +74,11 @@ namespace ObjectPools
                 }
             }
 
-            Fruit newObj = Instantiate(GetRandomFruitPrefab());
-            fruitPools.Add(newObj);
-            lastDeactivatedFruitIndex = fruitPools.Count - 1;
-            return newObj;
+            InitializePool();
+            Fruit newFruit = fruitPools[(lastDeactivatedFruitIndex+1)%fruitPools.Count];
+            newFruit.transform.position = position;
+            newFruit.gameObject.SetActive(true);
+            return newFruit;
         }
 
         public IEnumerator ReturnActiveFruitsAndScoreWithDelay(float delay)
