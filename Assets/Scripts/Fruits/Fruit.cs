@@ -86,14 +86,11 @@ namespace Fruits
             gameView.SetScore();
 
             var newPoints = fruitPoint + 1;
-
-            gameObject.SetActive(false);
-            otherFruit.gameObject.SetActive(false);
+            fruitPools.ReturnFruitToPoolRandom(this);
+            fruitPools.ReturnFruitToPoolRandom(otherFruit);
 
             if (newPoints == MaxPoint)
             {
-                //controller.Model.WatermelonCount++;
-                //PlayerPrefs.SetInt(Constants.WatermelonCount, controller.Model.WatermelonCount);
                 controller.Model.SetWatermelonCount();
                 gameView.SetWatermelonCount();
             }
@@ -109,5 +106,7 @@ namespace Fruits
 
         public int FruitPoint { get => fruitPoint; set => fruitPoint = value; }
         public Rigidbody2D Rb => rb;
+        public SpriteRenderer SpriteRenderer { get => spriteRenderer; set => spriteRenderer = value; }
+        public CircleCollider2D CircleCollider2D { get => collider; set => collider = value; }
     }
 }
