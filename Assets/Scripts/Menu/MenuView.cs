@@ -1,5 +1,6 @@
 using GamePlay;
 using TMPro;
+
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,20 +10,6 @@ namespace Menu
     {
         [SerializeField] private TextMeshProUGUI highScoreTMP;
         [SerializeField] private TextMeshProUGUI watermelonCountTMP;
-
-        private GameModel gameModel;
-
-        private void Awake()
-        {
-            if (GameObject.FindGameObjectWithTag(Constants.DataTag) == null)
-            {
-                GameObject modelObj = new(Constants.DataTag)
-                {
-                    tag = Constants.DataTag
-                };
-                gameModel = modelObj.AddComponent<GameModel>();
-            }
-        }
 
         private void Start()
         {

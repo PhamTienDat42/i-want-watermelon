@@ -14,10 +14,7 @@ namespace Fruits
         private new CircleCollider2D collider;
         private Rigidbody2D rb;
         private Vector2 velocity;
-
         private FruitPools fruitPools;
-
-        private const int MaxPoint = 10;
 
         private void Start()
         {
@@ -89,14 +86,14 @@ namespace Fruits
             fruitPools.ReturnFruitToPoolRandom(this);
             fruitPools.ReturnFruitToPoolRandom(otherFruit);
 
-            if (newPoints == MaxPoint)
+            if (newPoints == Constants.MaxPoint)
             {
                 controller.Model.SetWatermelonCount();
                 gameView.SetWatermelonCount();
             }
             else
             {
-                SpawnNewFruit(newPoints, higherFruit.transform.position, velocity / 2f);
+                SpawnNewFruit(newPoints, higherFruit.transform.position, velocity/2f);
             }
 
             transform.localPosition = otherFruit.gameObject.transform.localPosition = Vector3.zero;
