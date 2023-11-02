@@ -10,26 +10,24 @@ namespace ObjectPools
     public class FruitPools : MonoBehaviour
     {
         [SerializeField] private List<Fruit> fruitPrefabs;
-        [SerializeField] private int poolSize = 10;
+        [SerializeField] private int poolSize;
         [SerializeField] private GameObject fruitsParents;
         [SerializeField] private GameController controller;
         [SerializeField] private GameView gameView;
 
-        private List<Fruit> fruitPools = new();
+        private readonly List<Fruit> fruitPools = new();
         private int lastDeactivatedFruitIndex = -1;
         private readonly float shakeForce = 5f;
         private readonly float shakeThreshold = 3f;
 
         private void Awake()
         {
-            InitializePool();
+            InitializePool(poolSize);
         }
 
-        private void InitializePool()
+        private void InitializePool(int size)
         {
-            //fruitPools = new List<Fruit>();
-
-            for (int i = 0; i < poolSize; i++)
+            for (int i = 0; i < size; i++)
             {
                 Fruit obj = Instantiate(GetRandomFruitPrefab());
                 obj.InstantiateFruits(this, controller, gameView);
@@ -73,7 +71,7 @@ namespace ObjectPools
 
             if (isFull == true)
             {
-                InitializePool();
+                InitializePool(poolSize);
             }
 
             for (int i = 0; i < fruitPools.Count; i++)
@@ -159,5 +157,7 @@ namespace ObjectPools
                 rb.AddForce(shakeForce, ForceMode2D.Impulse);
             }
         }
+
+        //Save data
     }
 }

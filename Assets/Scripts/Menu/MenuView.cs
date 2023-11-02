@@ -11,6 +11,18 @@ namespace Menu
         [SerializeField] private TextMeshProUGUI highScoreTMP;
         [SerializeField] private TextMeshProUGUI watermelonCountTMP;
 
+        private void Awake()
+        {
+            if (GameObject.FindGameObjectWithTag(Constants.DataTag) == null)
+            {
+                GameObject modelObj = new(Constants.DataTag)
+                {
+                    tag = Constants.DataTag
+                };
+               var gameModel = modelObj.AddComponent<GameModel>();
+            }
+        }
+
         private void Start()
         {
             highScoreTMP.text = PlayerPrefs.GetInt(Constants.HighScore, 0).ToString();
