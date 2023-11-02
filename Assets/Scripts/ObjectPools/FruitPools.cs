@@ -60,6 +60,22 @@ namespace ObjectPools
 
         public Fruit GetFruitFromPoolNew(Vector3 position)
         {
+            var isFull = true;
+
+            for (int i = 0; i < fruitPools.Count; i++)
+            {
+                if (!fruitPools[i].gameObject.activeInHierarchy && (i != fruitPools.Count - 1))
+                {
+                    isFull = false;
+                    break;
+                }
+            }
+
+            if (isFull == true)
+            {
+                InitializePool();
+            }
+
             for (int i = 0; i < fruitPools.Count; i++)
             {
                 int indexToCheck = (lastDeactivatedFruitIndex + i + 1) % fruitPools.Count;
@@ -73,12 +89,7 @@ namespace ObjectPools
                     return fruit;
                 }
             }
-
-            InitializePool();
-            Fruit newFruit = fruitPools[(lastDeactivatedFruitIndex+1)%fruitPools.Count];
-            newFruit.transform.position = position;
-            newFruit.gameObject.SetActive(true);
-            return newFruit;
+            return null;
         }
 
         public IEnumerator ReturnActiveFruitsAndScoreWithDelay(float delay)
