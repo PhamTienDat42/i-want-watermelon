@@ -1,10 +1,11 @@
-﻿using ObjectPools;
+﻿using GamePlay;
+using ObjectPools;
 using System;
 using UnityEngine;
 
-namespace GamePlay
+namespace Fruits
 {
-    public class Fruits : MonoBehaviour
+    public class Fruit : MonoBehaviour
     {
         [SerializeField] private int fruitPoint;
         private GameController controller;
@@ -34,7 +35,7 @@ namespace GamePlay
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
-            Fruits otherFruit = collision.gameObject.GetComponent<Fruits>();
+            Fruit otherFruit = collision.gameObject.GetComponent<Fruit>();
 
             if (otherFruit != null)
             {
@@ -45,14 +46,14 @@ namespace GamePlay
             }
         }
 
-        private bool CanCombine(Fruits otherFruit)
+        private bool CanCombine(Fruit otherFruit)
         {
             return fruitPoint == otherFruit.fruitPoint;
         }
 
         public void SpawnNewFruit(int newPoints, Vector3 pos, Vector2 velocity)
         {
-            Fruits newFruit = fruitPools.GetFruitFromPoolNew(pos);
+            Fruit newFruit = fruitPools.GetFruitFromPoolNew(pos);
             newFruit.fruitPoint = newPoints;
             newFruit.GetComponent<SpriteRenderer>().sprite = controller.FruitSprites[(newPoints - 1) % 9];
             float spriteRadius = newFruit.GetComponent<SpriteRenderer>().sprite.bounds.size.x / 2f;
@@ -66,9 +67,9 @@ namespace GamePlay
             newFruit.gameObject.SetActive(true);
         }
 
-        private void CombineObjects(Fruits otherFruit)
+        private void CombineObjects(Fruit otherFruit)
         {
-            Fruits higherFruit = (transform.position.y > otherFruit.transform.position.y) ? this : otherFruit;
+            Fruit higherFruit = (transform.position.y > otherFruit.transform.position.y) ? this : otherFruit;
             velocity = (transform.position.y > otherFruit.transform.position.y) ? this.rb.velocity : otherFruit.gameObject.GetComponent<Rigidbody2D>().velocity;
 
             if (!gameObject.activeSelf && !otherFruit.gameObject.activeSelf)
