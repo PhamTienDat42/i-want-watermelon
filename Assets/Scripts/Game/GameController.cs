@@ -191,5 +191,6 @@ namespace GamePlay
         public Fruits.Fruit NextFruit => nextFruit;
         public GameModel Model => model;
         public bool BoolShake { get => boolShake; set => boolShake = value; }
+        public BoxCollider2D TopCollider => topCollider;
     }
 }

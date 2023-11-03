@@ -50,8 +50,10 @@ namespace ObjectPools
         {
             controller.BoolShake = false;
             controller.NextFruit.gameObject.SetActive(false);
+            controller.TopCollider.isTrigger = false;
             ApplyShakeForce();
             yield return new WaitForSeconds(2.0f);
+            controller.TopCollider.isTrigger = true;
             controller.NextFruit.gameObject.SetActive(true);
             controller.ResetCountDownTime(180f);
         }
