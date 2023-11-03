@@ -1,6 +1,5 @@
 ﻿using ObjectPools;
 using UnityEngine;
-using Utilities;
 
 namespace GamePlay
 {
@@ -37,11 +36,9 @@ namespace GamePlay
                 if (Time.time - startTime > collisionDuration)
                 {
                     controller.NextFruit.gameObject.SetActive(false);
+                    controller.IsClickable = false;
                     StartCoroutine(fruitPools.ReturnActiveFruitsAndScoreWithDelay(0.25f));
                     yield return new WaitForSeconds(1.0f);
-                    controller.IsClickable = false;
-                    controller.Model.PopupTypeParam = PopupType.GameOverPopup;
-                    PopupHelpers.Show(Constants.SettingPopup);
                     yield break;
                 }
                 yield return null;

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using GamePlay;
 using Fruits;
 using System.Collections;
+using Utilities;
 
 namespace ObjectPools
 {
@@ -17,7 +18,7 @@ namespace ObjectPools
 
         private readonly List<Fruit> fruitPools = new();
         private int lastDeactivatedFruitIndex = -1;
-        private readonly float shakeForce = 5f;
+        private readonly float shakeForce = 10f;
         private readonly float shakeThreshold = 3f;
 
         private void Awake()
@@ -118,6 +119,8 @@ namespace ObjectPools
                 highScore = controller.Model.CurrentScore;
                 controller.Model.SetHighScore(highScore);
             }
+            controller.Model.PopupTypeParam = PopupType.GameOverPopup;
+            PopupHelpers.Show(Constants.SettingPopup);
         }
 
         public void ReturnFruitToPool(Fruit fruit)
@@ -159,7 +162,5 @@ namespace ObjectPools
                 rb.AddForce(shakeForce, ForceMode2D.Impulse);
             }
         }
-
-        //Save data
     }
 }
