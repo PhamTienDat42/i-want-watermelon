@@ -192,5 +192,6 @@ namespace GamePlay
         public GameModel Model => model;
         public bool BoolShake { get => boolShake; set => boolShake = value; }
         public BoxCollider2D TopCollider => topCollider;
+        public FruitPools FruitPools => fruitPools;
     }
 }

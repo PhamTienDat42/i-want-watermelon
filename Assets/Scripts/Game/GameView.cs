@@ -47,5 +47,10 @@ namespace GamePlay
             PopupHelpers.Show(Constants.SettingPopup);
             Time.timeScale = 0f;
         }
+
+        public void OnShakePhoneButtonClick()
+        {
+            StartCoroutine(controller.FruitPools.ShakePhone());
+        }
     }
 }
