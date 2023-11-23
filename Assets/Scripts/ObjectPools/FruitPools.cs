@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 
+using System.Collections;
 using System.Collections.Generic;
+
 using GamePlay;
 using Fruits;
-using System.Collections;
 
 namespace ObjectPools
 {
@@ -46,7 +47,7 @@ namespace ObjectPools
             }
         }
 
-        private IEnumerator ShakePhone()
+        public IEnumerator ShakePhone()
         {
             controller.BoolShake = false;
             controller.NextFruit.gameObject.SetActive(false);
@@ -61,14 +62,25 @@ namespace ObjectPools
         public Fruit GetFruitFromPoolNew(Vector3 position)
         {
             var isFull = true;
+            var d = 0;
 
             for (int i = 0; i < fruitPools.Count; i++)
             {
-                if (!fruitPools[i].gameObject.activeInHierarchy && (i != fruitPools.Count - 1))
+                if(!fruitPools[i].gameObject.activeInHierarchy)
                 {
-                    isFull = false;
-                    break;
+                    d++;
+                    if(d > 2)
+                    {
+                        isFull = false;
+                        break;
+                    }
                 }
+
+                //if (!fruitPools[i].gameObject.activeInHierarchy && (i != fruitPools.Count - 1))
+                //{
+                //    isFull = false;
+                //    break;
+                //}
             }
 
             if (isFull == true)
@@ -78,6 +90,7 @@ namespace ObjectPools
 
             for (int i = 0; i < fruitPools.Count; i++)
             {
+                Debug.Log(lastDeactivatedFruitIndex);
                 int indexToCheck = (lastDeactivatedFruitIndex + i + 1) % fruitPools.Count;
                 Fruit fruit = fruitPools[indexToCheck];
 
